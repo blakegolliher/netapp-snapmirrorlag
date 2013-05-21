@@ -12,6 +12,7 @@
 ##
 
 import sys, string, os
+# Make sure your netapp-manageability-sdk is unzipped, and the path put here.
 sys.path.append("/Users/bgolliher/netapp-manageability-sdk-5.1/lib/python/NetApp")
 from NaServer import *
 import getpass
@@ -56,10 +57,10 @@ for snapStat in result:
     state = snapStat.child_get_string("state")
     xfer_progress = float(snapStat.child_get_string("transfer-progress"))
     print "Snapmirror Report : %s to %s has a lag of %s." % (src,dest,(time.strftime('%H:%M:%S', time.gmtime(lag))))
-    print "     Last Transfer Time     : %s" % time.strftime('%H:%M:%S', time.gmtime(last_time_secs))
-    print "     Last Transfer Size     : %s" % sizeof_fmt(last_xfer_size)
-    print "     Last Mirror Timestamp      : %s" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_mirror_ts))
-    print "     Snapmirror Status      : %s" % status
-    print "     Snapmirror State       : %s" % state
+    print "     Last Transfer Time        : %s" % time.strftime('%H:%M:%S', time.gmtime(last_time_secs))
+    print "     Last Transfer Size        : %s" % sizeof_fmt(last_xfer_size)
+    print "     Last Mirror Timestamp     : %s" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_mirror_ts))
+    print "     Snapmirror Status         : %s" % status
+    print "     Snapmirror State          : %s" % state
     print "     Snapmirror xfer Progress  : %s" % sizeof_fmt(xfer_progress)
     print " "
