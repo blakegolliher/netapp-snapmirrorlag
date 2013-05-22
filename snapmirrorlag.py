@@ -7,7 +7,7 @@
 # Based on the netapp sample snapmirror.py in
 # netapp-manageability-sdk-5.1/src/sample/Data_ONTAP/Python
 #
-# Blake Golliher - blakegolliher@gmail.com",
+# Blake Golliher - blakegolliher@gmail.com
 #
 ##
 
