@@ -62,27 +62,33 @@ for filer_name in filer_list:
 	if(ret.results_status() == "failed"):
 		print "%s failed." % filer_name
 		print(ret.results_reason() + "\n")
-
+		sys.exit(2)
+	
 	status = ret.child_get("snapmirror-status")
 
 	if(not(status == None)):
 		result = status.children_get()
+	else:
+		print "status_children_get was empty\n"
+		sys.exit(2)
 
-		for snapStat in result:
-			src = snapStat.child_get_string("source-location")
-			dest = snapStat.child_get_string("destination-location")
-			lag = int(snapStat.child_get_string("lag-time"))
-			last_time_secs = int(snapStat.child_get_string("last-transfer-duration"))
-			last_xfer_size = float(snapStat.child_get_string("last-transfer-size"))
-			last_mirror_ts = int(snapStat.child_get_string("mirror-timestamp"))
-			status = snapStat.child_get_string("status")
-			state = snapStat.child_get_string("state")
-			xfer_progress = float(snapStat.child_get_string("transfer-progress"))
-			print "Snapmirror Report : %s to %s has a lag of %s." % (src,dest,(time.strftime('%H:%M:%S', time.gmtime(lag))))
-			print "     Last Transfer Time        : %s" % time.strftime('%H:%M:%S', time.gmtime(last_time_secs))
-			print "     Last Transfer Size        : %s" % sizeof_fmt(last_xfer_size)
-			print "     Last Mirror Timestamp     : %s" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_mirror_ts))
-			print "     Snapmirror Status         : %s" % status
-			print "     Snapmirror State          : %s" % state
-			print "     Snapmirror xfer Progress  : %s" % sizeof_fmt(xfer_progress)
-			print " "
+for snapStat in result:
+	src = snapStat.child_get_string("source-location")
+	dest = snapStat.child_get_string("destination-location")
+	lag = int(snapStat.child_get_string("lag-time"))
+	last_time_secs = int(snapStat.child_get_string("last-transfer-duration"))
+	last_xfer_size = float(snapStat.child_get_string("last-transfer-size"))
+	last_mirror_ts = int(snapStat.child_get_string("mirror-timestamp"))
+	status = snapStat.child_get_string("status")
+	state = snapStat.child_get_string("state")
+	xfer_progress = float(snapStat.child_get_string("transfer-progress"))
+	print "Snapmirror Report : %s to %s has a lag of %s." % (src,dest,(time.strftime('%H:%M:%S', time.gmtime(lag))))
+	print "		Snapmirror Source 		: %s" % src
+	print "		Snapmirror Destination		: %s" % dest
+	print "		Snapmirror Lag 	 		: %s" % time.strftime('%H:%M:%S', time.gmtime(lag))
+	print "		Last Transfer Time		: %s" % time.strftime('%H:%M:%S', time.gmtime(last_time_secs))
+	print "		Last Transfer Size		: %s" % sizeof_fmt(last_xfer_size)
+	print "		Last Mirror Timestamp		: %s" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last_mirror_ts))
+	print "		Snapmirror Status		: %s" % status
+	print "		Snapmirror State		: %s" % state
+	print "		Snapmirror xfer Progress	: %s\n" % sizeof_fmt(xfer_progress)
